@@ -1,7 +1,5 @@
 service: auth-server
 
-frameworkVersion: '3'
-
 provider:
   name: aws
   runtime: nodejs12.x
@@ -19,8 +17,8 @@ functions:
       - http:
           path: api/get-auth-url
           method: get
-  getAccessToken:
-    handler: handler.getAccessToken
+  getToken:
+    handler: handler.getToken
     events:
       - http:
           path: api/token/{code}
