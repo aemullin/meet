@@ -15,9 +15,9 @@ describe('<App /> component', () => {
    })
    test('display custum number of events when input is changed', () => {
        EventNumberWrapper.find('.number').simulate('change', {
-           target: { value: '25'},
+           target: { value: '2'},
        });
-       expect(EventNumberWrapper.state("numberOfEvents")).toEqual("25");
+       expect(EventNumberWrapper.state("numberOfEvents")).toEqual("2");
    })
   
 });

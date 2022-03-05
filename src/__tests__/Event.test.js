@@ -20,9 +20,6 @@ describe('<Event /> component', () => {
     test('display event date and time', () => {
         expect(EventWrapper.find('.date-time')).toHaveLength(1);
     });
-    test('load event details to be displayed', () => {
-        expect(EventWrapper.find('.event-details')).toHaveLength(1);
-    });
     test('display button to show event detail', () => {
         expect(EventWrapper.find('.display-details')).toHaveLength(1);
     });
