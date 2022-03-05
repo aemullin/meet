@@ -13,11 +13,5 @@ describe('<App /> component', () => {
    test('display default number of events, 32', () => {
     expect(EventNumberWrapper.state('numberOfEvents')).toEqual('32');
    })
-   test('display custum number of events when input is changed', () => {
-       EventNumberWrapper.find('.number').simulate('change', {
-           target: { value: '2'},
-       });
-       expect(EventNumberWrapper.state("numberOfEvents")).toEqual("2");
-   })
   
 });

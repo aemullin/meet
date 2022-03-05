@@ -11,6 +11,7 @@ class App extends Component {
     events:[],
     locations: [],
     numberOfEvents: 32,
+    location: 'all'
   };
   
   componentDidMount() {
@@ -34,18 +35,20 @@ class App extends Component {
       {
         numberOfEvents: numberOfEvents,
       },
-      this.updateEvents(this.state.locations, numberOfEvents)
+      this.updateEvents(this.state.location, numberOfEvents)
     );
   };
 
-  updateEvents = (location, eventCount) => {
+  updateEvents = (location, eventCount = this.state.numberOfEvents) => {
     getEvents().then((events) => {
-      const locationEvents = (location === 'all') ?
+      const locationEvents = location === 'all' ?
         events :
         events.filter((event) => event.location === location);
+      const eventNumberFilter =
+        eventCount > locationEvents.length ? locationEvents : locationEvents.slice(0, eventCount);
       if (this.mounted) {
         this.setState({
-          events: locationEvents.slice(0, this.state.numberOfEvents),
+          events: eventNumberFilter,
         });
       }
     });
@@ -54,6 +57,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <div className="title">
+          <a className='title-link' href='https://aemullin.github.io/meet/'><h1>Meet</h1></a>
+        </div><br/>
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} numberOfEvents={this.state.numberOfEvents} />
         <NumberOfEvents updateNumberOfEvents={(number) => {this.updateNumberOfEvents(number)}} />
         <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />

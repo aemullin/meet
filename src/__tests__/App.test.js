@@ -65,7 +65,7 @@ describe('<App/> integration', () => {
   const allEvents = await getEvents();
   expect(AppWrapper.state('events')).toEqual(allEvents);
   AppWrapper.unmount();
-  })
+  });
 
   test('pass default number of events, 32', () => {
     const AppWrapper = mount(<App/>);
@@ -73,5 +73,13 @@ describe('<App/> integration', () => {
     expect(EventNumberWrapper).not.toEqual(undefined);
     expect(AppWrapper.find(EventList).props().numberOfEvents).toEqual(32);
     AppWrapper.unmount();
-  })
+  });
+
+  test("update state when number of events displayed is updated", () => {
+    let AppWrapper = mount(<App />);
+    const EventNumberWrapper = AppWrapper.find(NumberOfEvents);
+    EventNumberWrapper.find(".number").at(0).simulate("change", { target: { value: 5 } });
+    expect(AppWrapper.state("numberOfEvents")).toBe(5);
+    AppWrapper.unmount();
+  });
 });
