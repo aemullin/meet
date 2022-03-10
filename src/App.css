@@ -4,6 +4,34 @@ body {
   background-color: #4DAA57;
 }
 
+.Alert{
+  padding-top: 95px;
+}
+
+@media all and (max-width: 1200px) {
+  .Alert {
+    padding-top: 90px;;
+  }
+}
+
+@media all and (max-width: 950px) {
+  .Alert {
+    padding-top: 85px;;
+  }
+}
+
+@media all and (max-width: 650px) {
+  .Alert {
+    padding-top: 80px;;
+  }
+}
+
+@media all and (max-width: 450px) {
+  .Alert {
+    padding-top: 75px;;
+  }
+}
+
 .App {
   text-align: center;
   padding: 2% 5%;
