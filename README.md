@@ -1,5 +1,5 @@
 # Meet App
-In this project, I have built a serverless, progressive web application (PWA) with React using test-driven development (TDD. The application uses the Google Calendar API to fetch upcoming events. Here is a link to the live app: https://aemullin.github.io/meet/.
+In this project, I have built a serverless, progressive web application with React using test-driven development. The application uses the Google Calendar API to fetch upcoming events. Here is a link to the live app: https://aemullin.github.io/meet/.
 
 ## User stories and Scenarios
 
