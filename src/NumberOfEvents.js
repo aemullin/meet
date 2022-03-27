@@ -3,23 +3,19 @@ import {ErrorAlert} from './Alert';
 
 class NumberOfEvents extends Component {
     state = {
-        numberOfEvents: '32',
+        numberOfEvents: 32,
         infoText: ''
     }
 
-    onInputChange = (event) => {
+    handleInputChanged = (event) => {
         const value = event.target.value;
-        if (this.state.numberOfEvents < 1) {
+        if (value < 1 || value > 32) {
             this.setState({
-              numberOfEvents: value,
+              numberOfEvents: "",
               infoText: 'Please enter a value from 1 to 32'
             });
-          } else if (this.state.numberOfEvents > 32) {
+          } else {
             this.setState({
-              numberOfEvents: value,
-              infoText: 'Please enter a value from 1 to 32'
-            })} else {
-            return this.setState({
               numberOfEvents: value,
               infoText: ''
             });
@@ -31,7 +27,7 @@ class NumberOfEvents extends Component {
         
         return(
             <div className='event-number'>
-                <input type='number' className='number' value={this.state.numberOfEvents} onChange={this.onInputChange}></input><br/> 
+                <input type='number' className='number' value={this.state.numberOfEvents} onChange={this.handleInputChanged}></input><br/> 
                 Number of events on page
                 <ErrorAlert text={this.state.infoText} />
             </div>

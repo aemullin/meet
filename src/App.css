@@ -153,9 +153,19 @@ input[type="number"] {
   font-family: sans-serif;
 }
 
+.graph {
+  background-color: #B5DDa4;
+  border-radius: 5px;
+  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
+}
+
 .Alert {
   position: fixed;
   top: 20px;
+}
+
+.data-container{
+  display: flex;
 }
 
 .data-vis-wrapper {

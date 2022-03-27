@@ -3,10 +3,12 @@ import './App.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
+import EventGenre from "./EventGenre";
 import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
 import './nprogress.css';
-import{WarningAlert} from './alert';
+import{WarningAlert} from './Alert';
 import WelcomeScreen from './WelcomeScreen';
+import {ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer} from 'recharts';
 
 class App extends Component {
   state = {
@@ -50,32 +52,45 @@ async componentDidMount() {
     this.mounted = false;
   }
 
-  updateNumberOfEvents = (numberOfEvents) => {
+  updateNumberOfEvents = (eventCount) => {
     this.setState(
       {
-        numberOfEvents: numberOfEvents,
+        numberOfEvents: eventCount,
       },
-      this.updateEvents(this.state.location, numberOfEvents)
+      this.updateEvents(this.state.location, eventCount)
     );
   };
 
-  updateEvents = (location, eventCount = this.state.numberOfEvents) => {
+  updateEvents = (location, eventCount = this.state.eventCount) => {
     getEvents().then((events) => {
       const locationEvents = location === 'all' ?
         events :
         events.filter((event) => event.location === location);
-      const eventNumberFilter =
-        eventCount > locationEvents.length ? locationEvents : locationEvents.slice(0, eventCount);
+      const { numberOfEvents } = this.state;
       if (this.mounted) {
         this.setState({
-          events: eventNumberFilter,
+          events: locationEvents.slice(0, numberOfEvents),
+          numberOfEvents: eventCount,
+          location: location,
         });
       }
     });
   }
 
+  getData = () => {
+    const {locations, events} = this.state;
+    const data = locations.map((location)=>{
+      const number = events.filter((event) => event.location === location).length
+      const city = location.split(', ').shift()
+      return {city, number};
+    })
+    return data;
+  };
+
   render() {
     if (this.state.showWelcomeScreen === undefined) return <div className="App" />
+
+    const { locations, numberOfEvents, events } = this.state;
 
     return (
       <div className="App">
@@ -83,9 +98,26 @@ async componentDidMount() {
           <a className='title-link' href='https://aemullin.github.io/meet/'><h1>Meet</h1></a>
         </div><br/>
         <WarningAlert text={this.state.offlineText}/>
-        <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} numberOfEvents={this.state.numberOfEvents} />
-        <NumberOfEvents updateNumberOfEvents={(number) => {this.updateNumberOfEvents(number)}} />
-        <EventList events={this.state.events} numberOfEvents={this.state.numberOfEvents} />
+        <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
+        <NumberOfEvents updateNumberOfEvents={this.updateNumberOfEvents} numberOfEvents={this.state.numberOfEvents}/>
+        <div className='data-container'>
+          <EventGenre className='event-genre data-object' events={events} />
+          <ResponsiveContainer  className='graph data-object' height={300}>
+            <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
+              <CartesianGrid />
+              <XAxis type="category" dataKey="city" name="city" />
+              <YAxis
+                allowDecimals={false}
+                type="number"
+                dataKey="number"
+                name="number of events"
+              />
+              <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+              <Scatter data={this.getData()} fill="#8884d8" />
+            </ScatterChart>
+          </ResponsiveContainer>
+        </div>
+        <EventList events={this.state.events}/>
         <WelcomeScreen showWelcomeScreen={this.state.showWelcomeScreen} getAccessToken={() => { getAccessToken() }} />
 
       </div>

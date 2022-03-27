@@ -35,11 +35,11 @@ defineFeature(feature, test => {
         let EventNumberWrapper
         when('a user sets a filter', () => {
             EventNumberWrapper = AppWrapper.find(NumberOfEvents);
-            EventNumberWrapper.find(".number").at(0).simulate("change", { target: { value: 5 } });
         });
         
   
         then('the user will see more or less than 32 events', () => {
+            EventNumberWrapper.find(".number").at(0).simulate("change", { target: { value: 5 } });
             expect(AppWrapper.state("numberOfEvents")).toBe(5);
         });
     });
