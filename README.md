@@ -50,3 +50,9 @@ In this project, I have built a serverless, progressive web application with Rea
 - Given: a user opens the app
 -	When: a user wants to visually see how many upcoming events there are
 -	Then: they will have access to a chart showing the number of events per city
+
+
+## Live app
+
+https://aemullin.github.io/meet/
+
